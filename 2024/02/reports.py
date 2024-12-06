@@ -32,4 +32,18 @@ for report in reports:
 print(count)
 
 # Part two
+reports = read_file('input.txt')
+count = 0
+for report in reports:
+    if is_safe(report):
+        count += 1
+        print(report)
+    else:
+        for i in range(len(report)):
+            minus_one = report[:i] + report[(1+i):]
+            if is_safe(minus_one):
+                count +=1
+                print(report)
+                break
 
+print(count)
