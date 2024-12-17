@@ -5,7 +5,7 @@ infilename = 'input.txt'
 
 import itertools
 import numpy as np
-
+import re
 
 with open(infilename, 'r', encoding='UTF-8') as infile:
     data = infile.readlines()
@@ -57,6 +57,13 @@ def get_robots(positions, height, width):
     return(mat)
 
 
+def print_robots(mat):
+    mat = [''.join(' ' if x == 0 else '&' for x in y) for y in mat]
+    print('\n'.join(mat))
+
+
+
+
 maps = generate_robot_map(x=x_starts,
                             xv=x_velocities,
                             y=y_starts,
@@ -102,8 +109,7 @@ for i in maps:
     colsums = robots.sum(axis=0)  # column sums
     if max(rowsums) > 30:
         if max(colsums) > 30:
+            print_robots(robots)
             print(counter, max(rowsums), max(colsums))
-
-
-
+            break
 
