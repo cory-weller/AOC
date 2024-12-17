@@ -67,8 +67,6 @@ maps = generate_robot_map(x=x_starts,
 
 
 desired = 100
-# for i in range(desired):
-#     a = next(maps)
 
 a = next(itertools.islice(maps, desired-1, None))
 robots = get_robots(a, height, width)
@@ -84,4 +82,28 @@ q4 = robots[1+mid_y:, 1+mid_x:]
 result = np.sum(q1) * np.sum(q2) * np.sum(q3) * np.sum(q4)
 result = int(result)
 print(result)
+
+# Part Two
+maps = generate_robot_map(x=x_starts,
+                            xv=x_velocities,
+                            y=y_starts,
+                            yv=y_velocities,
+                            height=height,
+                            width=width)
+
+
+counter = 0
+for i in maps:
+    counter += 1
+    if counter > 100000:
+        break
+    robots = get_robots(i, height, width)
+    rowsums = robots.sum(axis=1)  # row sums
+    colsums = robots.sum(axis=0)  # column sums
+    if max(rowsums) > 30:
+        if max(colsums) > 30:
+            print(counter, max(rowsums), max(colsums))
+
+
+
 
