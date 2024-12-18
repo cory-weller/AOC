@@ -28,3 +28,43 @@ for i in range(blinks):
     #print(start)
     start = flatten([mutate(x) for x in start])
     print(len(set(start)))
+
+while True:
+    i = max(start)
+    print(i)
+    start = mutate(i)
+
+
+# Part 2
+
+
+count = 0
+def recursive_mutate(N, blinks, max_blinks):
+    global count
+    if blinks >= max_blinks:
+        count += 1
+    else:
+        for i in mutate(N):
+            recursive_mutate(i, blinks+1, max_blinks)
+
+
+for i in start[1:2]:
+    recursive_mutate(N=i, blinks=0, max_blinks=40)
+
+print(count)
+
+
+branches = {}
+
+for i in range(10):
+    for mb in range(50):
+        count = 0
+        recursive_mutate(N=i, blinks=0, max_blinks=mb)
+
+
+
+
+print(count)
+
+
+    
