@@ -26,7 +26,8 @@ count = 0
 for i in range(1,len(m)-1):
     for j in range(1, len(m[0])-1):
         left, right = get_crosses(m, i, j)
-        print(i, j, left, right)
+        #print(i, j, left, right)
         if is_xmas(left) and is_xmas(right):
             count += 1
 
+print(count)
