@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-#infilename = 'input.txt'
-infilename = 'tiny.txt'
+infilename = 'input.txt'
+#infilename = 'tiny.txt'
 
 import re
 
@@ -19,32 +19,29 @@ for n,i in enumerate(text):
     machines[n]['prize'] = [x+10000000000000 for x in  results[4:6]]
 
 
-# A = 3 token
-# B = 1 token
 
-# Iterate combinations and if X pos is good, then check y
-
-def gen_combos(machine):
+# Solve A and B by systems of equations
+def get_AB(machine):
     ax, ay = machine['A']
     bx, by = machine['B']
-    px, py = machine['prize']    
-    ax, ay, bx, by, px, py
-    for a in range(1,101):
-        for b in range(1,101):
-            if a*ax + b*bx == px:
-                if a*ay + b*by == py:
-                    yield (a,b,3*a+b)
+    px, py = machine['prize']
+    # If both same slope:
+    if ay/ax == by/bx:
+        print('Uhoh same slope')
+    A = (px*by - py*bx) / (ax*by - ay*bx)
+    B = (px - ax*A)/bx
+    if A%1 == 0 and B%1 == 0:
+        return (A,B)
+    else:
+        return (None, None)
+
 
 
 cost = 0
-
-for key in list(machines.keys()):
-    winning_combos = list(gen_combos(machines[key]))
-    if len(winning_combos) == 0:
-        continue
-    min_cost = min([x[2] for x in winning_combos])
-    cost += min_cost
-
+for i in list(machines.keys()):
+    A,B = get_AB(machines[i])
+    if A and B:
+        cost += 3*A
+        cost += B
 
 print(cost)
-
